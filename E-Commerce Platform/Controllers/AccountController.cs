@@ -2,9 +2,10 @@
 
 namespace E_Commerce_Platform.Controllers
 {
-    public class DashboardController : Controller
+    public class AccountController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]   
+        public IActionResult Dashboard()
         {
             return View();
         }

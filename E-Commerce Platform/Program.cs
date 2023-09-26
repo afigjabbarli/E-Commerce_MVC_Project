@@ -50,7 +50,7 @@ namespace E_Commerce_Platform
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.MapControllerRoute("default", "{controller=User}/{action=Index}");
+            app.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             app.Run();
         }
     }

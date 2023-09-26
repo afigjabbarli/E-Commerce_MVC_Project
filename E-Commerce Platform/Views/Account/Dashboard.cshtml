@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title style="color: #D10024;">User Registration</title>
+    <!-- Include Bootstrap CSS -->
+   
+    <!-- Include custom CSS -->
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .container-input {
+            width: 80%;
+            background-color: #15161D;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0px auto;
+        }
+
+        .form-group label {
+            color: white; /* Change label color to red */
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container-input">
+        <h2 style="color:red">User Registration</h2>
+        <form id="registrationForm">
+            <!-- Name Input -->
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" id="Name" name="Name" required>
+                <div style="color:red" class="invalid-feedback">Name is required.</div>
+            </div>
+
+            <!-- Surname Input -->
+            <div class="form-group">
+                <label for="Surname">Surname</label>
+                <input type="text" class="form-control" id="Surname" name="Surname" required>
+                <div style="color:red" class="invalid-feedback">Surname is required.</div>
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" required>
+                <div style="color:red" class="invalid-feedback">Invalid email address format.</div>
+            </div>
+
+            <!-- Email Password Input -->
+            <div class="form-group">
+                <label for="EmailPassword">Email Password</label>
+                <input type="password" class="form-control" id="EmailPassword" name="EmailPassword" required>
+                <div style="color:red" class="invalid-feedback">Email password is required.</div>
+            </div>
+
+            <!-- PIN Input -->
+            <div class="form-group">
+                <label for="PIN">PIN</label>
+                <input type="text" class="form-control" id="PIN" name="PIN" required pattern="^[0-9A-Z]{7}$">
+                <div style="color:red" class="invalid-feedback">PIN must be a 7-digit number.</div>
+            </div>
+
+            <!-- Date of Birth Input -->
+            <div class="form-group">
+                <label for="DateofBirth">Date of Birth</label>
+                <input type="date" class="form-control" id="DateofBirth" name="DateofBirth" required>
+                <div style="color:red" class="invalid-feedback">Date of Birth is required.</div>
+            </div>
+
+            <!-- Gender Input -->
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <select class="form-control" id="Gender" name="Gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <div style="color:red" class="invalid-feedback">Gender is required.</div>
+            </div>
+
+            <!-- Account Balance Input -->
+            <div class="form-group">
+                <label for="AccountBalance">Account Balance</label>
+                <input type="number" class="form-control" id="AccountBalance" name="AccountBalance" required min="0">
+                <div style="color:red" class="invalid-feedback">Account balance is required and must be a non-negative number.</div>
+            </div>
+
+            <!-- Physical Image Name Input -->
+            <div class="form-group">
+                <label for="PhysicalImageName">Physical Image Name</label>
+                <input type="text" class="form-control" id="PhysicalImageName" name="PhysicalImageName" required>
+                <div style="color:red" class="invalid-feedback">Physical image name is required.</div>
+            </div>
+
+            <!-- Save and Back Buttons -->
+            <div class="form-group text-center">
+                <button style="background-color:blue" type="submit" class="btn btn-primary mr-2">Save</button>
+                <button style="background-color:red" type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Validation and Ajax Request Script -->
+    <script>
+        // Function to handle form submission
+        $(document).ready(function () {
+            $('#registrationForm').submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                if (this.checkValidity()) {
+                    // Serialize the form data
+                    var formData = $(this).serialize();
+
+                    // Send an Ajax POST request
+                    $.ajax({
+                        type: 'POST',
+                        url: '/YourController/YourAction', // Replace with your controller and action
+                        data: formData,
+                        success: function (response) {
+                            // Handle the response from the server (if needed)
+                            console.log(response);
+
+                            // Redirect or perform any other action as necessary
+                            // For example, you can redirect to a thank you page:
+                            // window.location.href = '/ThankYouPage';
+                        },
+                        error: function (error) {
+                            // Handle errors (if any)
+                            console.error(error);
+                        }
+                    });
+                }
+
+                this.classList.add('was-validated');
+            });
+        });
+
+        // Back button functionality
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
