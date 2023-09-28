@@ -23,14 +23,29 @@
         .form-group label {
             color: white; /* Change label color to red */
         }
+        .form-group input {
+            font-size:20px;
+            border: 5px solid grey;
+            height:50px
+        }
 
-       
+        .form-group button{
+            height: 50px;
+            width: 20%;
+            border:5px solid white;
+            border-radius:16px;
+        }
+
+        .form-group button {
+            font-size: 20px;
+           font-weight:600;
+        }
     </style>
 </head>
 <body>
     <div class="container-input">
         <h2 style="color:red">User Registration</h2>
-        <form id="registrationForm">
+        <form id="registrationForm" asp-controller="Auth" asp-action="Register">
             <!-- Name Input -->
             <div class="form-group">
                 <label for="Name">Name</label>
@@ -123,7 +138,7 @@
                     // Send an Ajax POST request
                     $.ajax({
                         type: 'POST',
-                        url: '/YourController/YourAction', // Replace with your controller and action
+                        url: '/Auth/Register', // Replace with your controller and action
                         data: formData,
                         success: function (response) {
                             // Handle the response from the server (if needed)
