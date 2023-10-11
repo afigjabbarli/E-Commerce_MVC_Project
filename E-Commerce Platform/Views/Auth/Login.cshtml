@@ -1,0 +1,155 @@
+﻿@using E_Commerce_Platform.ViewModels.User;
+@model UserLoginViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .Login-container {
+            width: 40%;
+            height: 370px;
+            border: 5px solid rgb(197, 0, 0);
+            border-radius: 16px;
+            background-color: black;
+            margin: 50px auto;
+        }
+
+            .Login-container .Login-row {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                padding: 25px;
+            }
+
+                .Login-container .Login-row .Login-title {
+                    width: 100%;
+                    height: 60px;
+                   
+                   
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .Login-container .Login-row .Login-title h1{
+                        color:white;
+                    }
+
+                .Login-container .Login-row #Login-form {
+                    height: 240px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
+                    .Login-container .Login-row #Login-form .Form-group {
+                        height: 75px;
+                        width: 100%;
+                        flex-wrap: wrap;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                    }
+
+                        .Login-container .Login-row #Login-form .Form-group label {
+                            color: rgb(197, 0, 0);
+                            width: 20%;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+
+                    .Login-container .Login-row #Login-form .button-group {
+                        width: 100%;
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+
+                        .Login-container .Login-row #Login-form .button-group button {
+                            width: 49%;
+                            height: 90%;
+                            border-radius: 10px;
+                        }
+
+                        .Login-container .Login-row #Login-form .button-group #submit {
+                            background-color: green;
+                            font-size: 22px;
+                            font-weight: bold;
+                            font-family: 'Times New Roman', Times, serif;
+                            color: white;
+                        }
+
+                            .Login-container .Login-row #Login-form .button-group #submit:hover {
+                                background-color: rgb(11, 207, 11);
+                                cursor: pointer;
+                            }
+
+                        .Login-container .Login-row #Login-form .button-group #back:hover {
+                            background-color: rgb(238, 61, 61);
+                            cursor: pointer;
+                        }
+
+                        .Login-container .Login-row #Login-form .button-group #back {
+                            background-color: rgb(197, 0, 0);
+                            font-size: 22px;
+                            font-weight: bold;
+                            font-family: 'Times New Roman', Times, serif;
+                            color: white;
+                        }
+
+                    .Login-container .Login-row #Login-form .Form-group input {
+                        width: 80%;
+                        height: 100%;
+                        border: 5px solid rgb(197, 0, 0);
+                        border-radius: 6px;
+                    }
+
+                    .Login-container .Login-row #Login-form .Form-group input {
+                        font-size: 20px;
+                        color: black;
+                    }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="Login-container">
+            <div class="Login-row">
+                <div class="Login-title">
+                    <h1>Login Form</h1>
+                </div>
+
+                <form id="Login-form" method="post" asp-controller="Auth" asp-action="Login">
+                    <div class="Form-group">
+                        <label for="Email">Email</label>
+                        <input placeholder="Email" type="text" name="Email" asp-for="Email" id="Email">
+                    </div>
+                    <div class="Form-group">
+                        <label for="Email_Password">Email password</label>
+                        <input placeholder="EmailPassword" type="password" name="Email_Password" asp-for="Email_Password" id="EmailPassword">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" id="submit">Back</button>
+                        <button type="submit" id="back">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

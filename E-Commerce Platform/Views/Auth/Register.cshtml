@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using E_Commerce_Platform.ViewModels.User;
+@model UserAddViewModel
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -46,32 +48,32 @@
 <body>
     <div class="container-input">
         <h2 style="color:red">User Registration</h2>
-        <form id="registrationForm" asp-controller="Auth" asp-action="Register">
+        <form id="registrationForm" asp-controller="Auth" asp-action="Register" method="post">
             <!-- Name Input -->
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" required>
+                <input type="text" class="form-control" id="Name" asp-for="Name" required>
                 <div style="color:red" class="invalid-feedback">Name is required.</div>
             </div>
 
             <!-- Surname Input -->
             <div class="form-group">
                 <label for="Surname">Surname</label>
-                <input type="text" class="form-control" id="Surname" name="Surname" required>
+                <input type="text" class="form-control" id="Surname" asp-for="Surname" required>
                 <div style="color:red" class="invalid-feedback">Surname is required.</div>
             </div>
 
             <!-- Email Input -->
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="email" class="form-control" id="Email" name="Email" required>
+                <input type="email" class="form-control" id="Email" asp-for="Email" required>
                 <div style="color:red" class="invalid-feedback">Invalid email address format.</div>
             </div>
 
             <!-- Email Password Input -->
             <div class="form-group">
                 <label for="EmailPassword">Email Password</label>
-                <input type="password" class="form-control" id="EmailPassword" name="EmailPassword" required>
+                <input type="password" class="form-control" id="EmailPassword" asp-for="EmailPassword" required>
                 <div style="color:red" class="invalid-feedback">Email password is required.</div>
             </div>
 
@@ -85,14 +87,14 @@
             <!-- Date of Birth Input -->
             <div class="form-group">
                 <label for="DateofBirth">Date of Birth</label>
-                <input type="date" class="form-control" id="DateofBirth" name="DateofBirth" required>
+                <input type="date" class="form-control" id="DateofBirth" asp-for="DateofBirth" required>
                 <div style="color:red" class="invalid-feedback">Date of Birth is required.</div>
             </div>
 
             <!-- Gender Input -->
             <div class="form-group">
                 <label for="Gender">Gender</label>
-                <select class="form-control" id="Gender" name="Gender" required>
+                <select class="form-control" id="Gender" asp-for="Gender" required>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -102,14 +104,14 @@
             <!-- Account Balance Input -->
             <div class="form-group">
                 <label for="AccountBalance">Account Balance</label>
-                <input type="number" class="form-control" id="AccountBalance" name="AccountBalance" required min="0">
+                <input type="number" class="form-control" id="AccountBalance" asp-for="AccountBalance" required min="0">
                 <div style="color:red" class="invalid-feedback">Account balance is required and must be a non-negative number.</div>
             </div>
 
             <!-- Physical Image Name Input -->
             <div class="form-group">
                 <label for="PhysicalImageName">Physical Image Name</label>
-                <input type="file" class="form-control" id="PhysicalImageName" name="PhysicalImageName" required>
+                <input type="file" class="form-control" id="PhysicalImageName" asp-for="PhysicalImageName" required>
                 <div style="color:red" class="invalid-feedback">Physical image name is required.</div>
             </div>
 
@@ -127,38 +129,7 @@
 
     <!-- Form Validation and Ajax Request Script -->
     <script>
-        // Function to handle form submission
-        $(document).ready(function () {
-            $('#registrationForm').submit(function (e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                if (this.checkValidity()) {
-                    // Serialize the form data
-                    var formData = $(this).serialize();
-
-                    // Send an Ajax POST request
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Auth/Register', // Replace with your controller and action
-                        data: formData,
-                        success: function (response) {
-                            // Handle the response from the server (if needed)
-                            console.log(response);
-
-                            // Redirect or perform any other action as necessary
-                            // For example, you can redirect to a thank you page:
-                            // window.location.href = '/ThankYouPage';
-                        },
-                        error: function (error) {
-                            // Handle errors (if any)
-                            console.error(error);
-                        }
-                    });
-                }
-
-                this.classList.add('was-validated');
-            });
-        });
+        
 
         // Back button functionality
         function goBack() {

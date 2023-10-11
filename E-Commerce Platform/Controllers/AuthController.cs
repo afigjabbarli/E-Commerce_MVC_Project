@@ -13,7 +13,18 @@ namespace E_Commerce_Platform.Controllers
         [HttpPost]
         public IActionResult Register(UserAddViewModel model)
         {
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult Login()
+        {
             return View();  
+        }
+
+        [HttpPost]
+        public IActionResult Login(UserLoginViewModel Model)
+        {
+            return RedirectToAction("Index", "Home");   
         }
     }
 }
