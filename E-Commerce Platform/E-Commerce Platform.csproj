@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Components\**" />
+    <Content Remove="Views\Shared\Components\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\**" />
+    <None Remove="Views\Shared\Components\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.21" />
@@ -21,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\Components\" />
     <Folder Include="wwwroot\assets\Client\" />
   </ItemGroup>
 

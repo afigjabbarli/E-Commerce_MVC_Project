@@ -13,6 +13,10 @@ namespace E_Commerce_Platform.Controllers
         [HttpPost]
         public IActionResult Register(UserAddViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]

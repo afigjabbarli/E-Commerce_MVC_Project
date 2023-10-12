@@ -12,7 +12,7 @@ namespace E_Commerce_Platform.Controllers
 {
     public class UserController : Controller
     {
-       public IActionResult Index()
+        public IActionResult Index()
         {
             return View();  
         }
