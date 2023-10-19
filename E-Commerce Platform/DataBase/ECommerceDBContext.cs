@@ -176,8 +176,61 @@ namespace E_Commerce_Platform.DataBase
             );
 
             ////// Color Seeding ended
-            
 
+            ////// Category Seeding started
+
+            modelBuilder.Entity<Category>().HasData
+            (
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -7,
+                    Name = "Phones, tablets and gadgets"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -6,
+                    Name = "Televisions, audio-video and photography"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -5,
+                    Name = "Laptops and computer equipment"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -4,
+                    Name = "Air conditioners and other climate equipment"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -3,
+                    Name = "Major Home Appliances"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -2,
+                    Name = "Small Appliances"
+                },
+                new Category
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -1,
+                    Name = "Game consoles and accessories"
+                }
+            );
         }
 
         public DbSet<User> Users { get; set; }
