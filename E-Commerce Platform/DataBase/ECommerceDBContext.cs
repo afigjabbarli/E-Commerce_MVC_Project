@@ -68,12 +68,51 @@ namespace E_Commerce_Platform.DataBase
                 .HasOne<Product>(pc => pc.Product)
                 .WithMany(p => p.ProductColors)
                 .HasForeignKey(pc => pc.ProductId);
-              
+
 
             ///ProductColor end region
 
-
-
+            /// Color Seeding started
+            modelBuilder.Entity<Color>().HasData
+            (
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -5,
+                    Name = "Black"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -4,
+                    Name = "Gray"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -3,
+                    Name = "Blue"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -2,
+                    Name = "White"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -1,
+                    Name = "Red"
+                }
+            );
+            ////// Color Seeding ended
+            
 
 
         }
