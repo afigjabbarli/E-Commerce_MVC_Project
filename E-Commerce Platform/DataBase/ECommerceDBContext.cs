@@ -112,8 +112,71 @@ namespace E_Commerce_Platform.DataBase
                 }
             );
             ////// Color Seeding ended
-            
 
+            //////Size seeding started
+
+            modelBuilder.Entity<Size>().HasData
+            (
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -7,
+                    Name = "XXS"
+                },
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -6,
+                    Name = "XS"
+                },
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -5,
+                    Name = "S"
+                },
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -4,
+                    Name = "M"
+                },
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -3,
+                    Name = "L"
+                },
+                new Size
+                {
+
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -2,
+                    Name = "XL"
+                },
+                 new Size
+                 {
+
+                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                     Id = -1,
+                     Name = "XXL"
+                 }
+            );
+
+            ////// Color Seeding ended
+            
 
         }
 
