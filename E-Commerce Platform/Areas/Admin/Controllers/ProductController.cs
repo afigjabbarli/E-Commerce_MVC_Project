@@ -1,7 +1,6 @@
 ﻿using E_Commerce_Platform.Areas.Admin.ViewModels;
 using E_Commerce_Platform.DataBase;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_Commerce_Platform.Areas.Admin.Controllers
 {
@@ -26,11 +25,11 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
 
             return View(model);
         }
-        [HttpPost]  
+        [HttpPost("add")]
         public IActionResult Add(ProductAddViewModel viewModel)
         {
 
-           return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }
