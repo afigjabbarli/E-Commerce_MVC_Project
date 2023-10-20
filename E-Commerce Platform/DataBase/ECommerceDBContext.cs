@@ -239,6 +239,7 @@ namespace E_Commerce_Platform.DataBase
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<Color> Colors { get; set; }
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }  

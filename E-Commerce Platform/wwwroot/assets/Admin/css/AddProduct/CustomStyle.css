@@ -1,0 +1,67 @@
+﻿#AddProduct
+{
+    height:500px;
+    width:100%;
+    
+}
+
+#AddProduct .Container
+{
+    height:100%;
+    width:95%;
+    background-color:#343a40;
+    margin: 20px auto;
+    border: 5px solid red;
+    border-radius: 16px;
+}
+
+#AddProduct .Container .Row
+{
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    background-color:#343a40;
+    border-radius: 16px;
+    display: flex;
+    
+    justify-content:center;
+    align-items:center;
+}
+#AddProduct .Container .Row #FormGroupList
+{
+    width:100%;
+    height:100%;
+   
+    display: flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+}
+#AddProduct .Container .Row #FormGroupList #FormGroup
+{
+    height:150px;
+    font-size:16px;
+    color:white;
+}
+#AddProduct .Container .Row #FormGroupList #buttonGroup
+{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100px;
+  background-color:white;
+  border:5px solid black;
+  border-radius: 10px;
+}
+#AddProduct .Container .Row #FormGroupList #buttonGroup button
+{
+    width:25%;
+    height:50px;
+    margin:10px;
+    background-color:black;
+    color:white;
+    font-size: 30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}

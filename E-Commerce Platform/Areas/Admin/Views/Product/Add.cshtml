@@ -1,0 +1,93 @@
+﻿@using E_Commerce_Platform.Areas.Admin.ViewModels
+@model ProductAddViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title style="color: #D10024;">User Registration</title>
+
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/assets/Admin/css/AddProduct/CustomStyle.css" asp-append-version="true" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+</head>
+<body>
+
+    <section id="AddProduct">
+        <div class="Container">
+            <div class="Row">
+                <form id="FormGroupList" method="post">
+                    <div id="FormGroup">
+                        <label asp-for="Name">Name</label>
+                        <input type="text" asp-for="Name" placeholder="Please enter product name..." />
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="Description">Description</label>
+                        <input type="text" asp-for="Description" placeholder="Please enter product description..." />
+                        <span asp-validation-for="Description"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="Price">Price</label>
+                        <input type="number" asp-for="Price" placeholder="Please enter product price..." />
+                        <span asp-validation-for="Price"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="SizeIds">Size</label>
+                        <select class="selectpicker" asp-for="SizeIds" multiple data-live-search="true">
+                            <option disabled>Select the size or sizes</option>
+                            @foreach (var size in Model.Sizes)
+                            {
+                                <option value="@size.Id">@size.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="SizeIds" class="invalid-feedback" style="display: block"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="ColorIds">Color</label>
+                        <select class="selectpicker" asp-for="ColorIds" multiple data-live-search="true">
+                            <option disabled>Select the color or colors</option>
+                            @foreach (var color in Model.Colors)
+                            {
+                                <option value="@color.Id">@color.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ColorIds" class="invalid-feedback" style="display: block"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="CategoryIds">Category</label>
+                        <select class="selectpicker" asp-for="CategoryIds" multiple data-live-search="true">
+                            <option disabled>Select the category or categories</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CategoryIds" class="invalid-feedback" style="display: block"></span>
+                    </div>
+                    <div id="FormGroup">
+                        <label asp-for="Image">Image</label>
+                        <input type="file" asp-for="Image" placeholder="Please enter product image" />
+                        <span asp-validation-for="Image" class="invalid-feedback" style="display: block"></span>
+                    </div>
+                    <div id="buttonGroup">
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="goBack()">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            // Back button functionality
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+    </section>
+</body>
+</html>
