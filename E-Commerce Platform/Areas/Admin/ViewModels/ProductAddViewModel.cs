@@ -6,14 +6,14 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels
     public class ProductAddViewModel
     {
         [Required(ErrorMessage = "Product name is required.")]
-        [StringLength(200, MinimumLength = 3, ErrorMessage = "Product name should be between 3 and 200 characters.")]
+        
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Product description is required.")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Product price is required.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Product price is not valid.")]
+        
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "At least one category must be selected.")]

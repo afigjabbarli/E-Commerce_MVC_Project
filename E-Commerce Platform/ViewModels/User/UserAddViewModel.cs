@@ -45,7 +45,7 @@ namespace E_Commerce_Platform.ViewModels.User
         public decimal AccountBalance { get; set; }
 
         [Required(ErrorMessage = "Physical image name is required.")]
-        public string PhysicalImageName { get; set; }
+        public IFormFile Image { get; set; }
     }
 
 }

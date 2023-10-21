@@ -35,6 +35,7 @@ namespace E_Commerce_Platform
                .AddScoped<IVerificationService, VerificationService>()
                .AddScoped<IUserService, UserService>() 
                .AddScoped<IEmailService, EmailService>()    
+               .AddSingleton<IFileService, FileService>()   
                .AddHttpContextAccessor()
                .AddHttpClient();
 

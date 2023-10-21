@@ -30,6 +30,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewComponents\" />
     <Folder Include="wwwroot\assets\Client\" />
+    <Folder Include="wwwroot\uploads\images\" />
   </ItemGroup>
 
 </Project>

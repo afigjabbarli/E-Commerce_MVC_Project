@@ -48,7 +48,7 @@
 <body>
     <div class="container-input">
         <h2 style="color:red">User Registration</h2>
-        <form id="registrationForm" asp-controller="Auth" asp-action="Register" method="post">
+        <form id="registrationForm" enctype="multipart/form-data" asp-controller="Auth" asp-action="Register" method="post">
             <!-- Name Input -->
             <div class="form-group">
                 <label for="Name">Name</label>
@@ -118,9 +118,9 @@
 
             <!-- Physical Image Name Input -->
             <div class="form-group">
-                <label for="PhysicalImageName">Physical Image Name</label>
-                <input type="file" class="form-control" id="PhysicalImageName" asp-for="PhysicalImageName" name="PhysicalImageName" required>
-                <span asp-validation-for="PhysicalImageName" class="text-danger"></span>
+                <label asp-for="Image">Image Name</label>
+                <input type="file" class="form-control" id="PhysicalImageName" asp-for="Image" name="Image" required>
+                <span asp-validation-for="Image" class="text-danger"></span>
                 <div style="color:red" class="invalid-feedback">Physical image name is required.</div>
             </div>
 
