@@ -1,0 +1,146 @@
+﻿@using E_Commerce_Platform.Areas.Admin.ViewModels.Product;
+@model List<ProductListItemViewModel>
+<!DOCTYPE html>
+<html>
+<head>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">*@
+    <style>
+        
+        .custom-edit-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .custom-delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .custom-details-button {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+       
+        .color-square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Colors</th>
+                    <th>Sizes</th>
+                    <th>Categories</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr style="border-bottom:1px solid #6C7293;">
+                        <td>@product.ID</td>
+                        <td>@product.Name</td>
+                        <td>@product.Description</td>
+                        <td>@product.Price</td>
+                        <td>
+                            <img src="@product.ImageUrl" alt="Product Image" width="100" height="100" />
+                        </td>
+                        <td>
+                            @foreach (var color in product.Colors)
+                            {
+                                <div class="color-square" style="background-color: @color.Name;"></div>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var size in product.Sizes)
+                            {
+                                @size.Name
+                            }
+                        </td>
+                        <td>
+                            @foreach (var category in product.Categories)
+                            {
+                                @category.Name
+                            }
+                        </td>
+                        <td>
+                            <a href="EditProduct?id=@product.ID" class="btn custom-edit-button btn-sm"><i class="fas fa-edit"></i></a>
+                            @*<a asp-controller="product" asp-action="delete" asp-route-id="@product.ID" method="POST" class="btn custom-delete-button btn-sm"><i class="fas fa-trash"></i> Delete</a>*@
+
+
+                            <button onclick="return confirm('Are you sure to delete?')" class="btn custom-delete-button btn-sm" form="remove-form-@product.ID"><i class="fas fa-trash"></i></button>
+                            <form asp-controller="product" asp-action="delete" asp-route-id="@product.ID" method="POST" class="d-none" id="remove-form-@product.ID">
+                                <input type="hidden" name="id" value="@product.ID">
+                            </form>
+
+
+                            <button type="button" class="btn custom-details-button btn-sm" data-toggle="modal" data-target="#detailsModal-@product.ID" onclick="openDetailsModal(@product.ID)"><i class="fas fa-info-circle"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Details Modal -->
+    @foreach (var product in Model)
+    {
+        <div class="modal fade" id="detailsModal-@product.ID" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailsModalLabel">Product Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Include detailed product information here -->
+                        <p><strong>ID:</strong> @product.ID</p>
+                        <p><strong>Name:</strong> @product.Name</p>
+                        <p><strong>Description:</strong> @product.Description</p>
+                        <p><strong>Price:</strong> @product.Price</p>
+                        <p><strong>Colors:</strong> @string.Join(", ", product.Colors.Select(c => c.Name))</p>
+                        <p><strong>Sizes:</strong> @string.Join(", ", product.Sizes.Select(s => s.Name))</p>
+                        <p><strong>Categories:</strong> @string.Join(", ", product.Categories.Select(cat => cat.Name))</p>
+                        <div style="width:100%; display:flex; justify-content:center">
+                            <img src="@product.ImageUrl" alt="Product Image" style="width:200px;height:200px;" class="img-fluid" />
+                        </div>
+                        <!-- Additional details can be added here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="closeModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openDetailsModal(modalId) {
+            $(`#detailsModal-${modalId}`).modal('show');
+        }
+        function closeModal(modalId) {
+            $(`#detailsModal-${modalId}`).modal('hide');
+            $(`#detailsModal-${modalId}`).aria-hidden = "false";
+        }
+
+    </script>
+</body>
+</html>

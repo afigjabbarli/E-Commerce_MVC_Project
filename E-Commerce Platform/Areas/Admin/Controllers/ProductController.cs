@@ -1,4 +1,4 @@
-﻿using E_Commerce_Platform.Areas.Admin.ViewModels;
+﻿using E_Commerce_Platform.Areas.Admin.ViewModels.Product;
 using E_Commerce_Platform.Contracts;
 using E_Commerce_Platform.DataBase;
 using E_Commerce_Platform.DataBase.Models;
@@ -118,7 +118,49 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
             }
             ///Color end...
             _DBContext.SaveChanges();   
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction(nameof(Read));
+        }
+        [HttpGet("read")]
+        public IActionResult Read()
+        {
+            var products = _DBContext.Products.OrderBy(p => p.CreatedAt).ToList();
+            var productList = ConvertProductsToViewModel(products);
+            return View(productList);
+        }
+        public List<ProductListItemViewModel> ConvertProductsToViewModel(List<Product> products)
+        {
+                List<ProductListItemViewModel> viewModels = new List<ProductListItemViewModel>();
+
+                foreach (var product in products)
+                {
+                    ProductListItemViewModel viewModel = new ProductListItemViewModel
+                    {
+                        ID = product.Id,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        ImageUrl = _fileService.GetStaticFilesUrl(CustomUploadDirectories.Products, product.PhysicalImageName),
+                        Colors = _DBContext.ProductColors.Where(pc => pc.ProductId == product.Id).Select(pc => pc.Color).ToList(),
+                        Sizes = _DBContext.ProductSizes.Where(ps => ps.ProductId == product.Id).Select(ps => ps.Size).ToList(),
+                        Categories = _DBContext.CategoryProducts.Where(cp => cp.ProductId == product.Id).Select(cp => cp.Category).ToList(),
+                    };
+
+                    viewModels.Add(viewModel);
+                }
+
+                return viewModels;
+        }
+        [HttpPost("{id}/delete")]
+        public IActionResult Delete(int id)
+        {
+            var product = _DBContext.Products.Where(product => product.Id == id).SingleOrDefault();
+            if(product is null)
+            {
+                return NotFound();
+            }
+            _DBContext.Products.Remove(product);
+            _DBContext.SaveChanges();
+            return RedirectToAction(nameof(Read));
         }
     }
 }
