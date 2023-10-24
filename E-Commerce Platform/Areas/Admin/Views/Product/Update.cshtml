@@ -1,0 +1,170 @@
+﻿@using E_Commerce_Platform.Areas.Admin.ViewModels.Product;
+@model ProductUpdateViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Other head information (CSS, JavaScript, etc.) -->
+    <meta charset="utf-8" />
+    <title style="color: red;">Product Update</title>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+    <style>
+        /* Stil düzenlemesi */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.selectpicker {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+}
+
+button[type="submit"] {
+    background: #007bff;
+    color: #fff;
+    padding: 15px 50px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+        .backButton{
+            background: red;
+            color: #fff;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+    </style>
+
+</head>
+<body>
+    <form enctype="multipart/form-data" method="POST" asp-controller="product" asp-action="update">
+        
+        @*Id input*@
+        <input type="hidden" asp-for="ProductId" value="@Model.ProductId"/>
+
+        <label asp-for="Name">Name:</label>
+        <input type="text" id="Name" name="Name" asp-for="Name" required>
+        <span asp-validation-for="Name" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="Description">Description:</label>
+        <input type="text" id="Description" name="Description" asp-for="Description" required>
+        <span asp-validation-for="Description" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="Price">Price:</label>
+        <input type="number" id="Price" name="Price" asp-for="Price" required>
+        <span asp-validation-for="Price" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="CategoryIds">Categories:</label>
+        <select id="CategoryIds" class="selectpicker" name="CategoryIds" asp-for="CategoryIds" multiple data-live-search="true">
+            <!-- You can use Model.Categories to display existing categories -->
+            <option disabled>Select the color or colors</option>
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.Id" selected>@category.Name</option>
+            }
+            <!-- To add new categories, use select options -->
+            @foreach (var newCategory in Model.NewCategories)
+            {
+                <option value="@newCategory.Id">@newCategory.Name</option>
+            }
+        </select>
+        <span asp-validation-for="CategoryIds" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="SizeIds">Sizes:</label>
+        <select id="SizeIds" class="selectpicker" name="SizeIds" asp-for="SizeIds" multiple data-live-search="true">
+            <option disabled>Select the color or colors</option>
+            <!-- You can use Model.Sizes to display existing sizes -->
+            @foreach (var size in Model.Sizes)
+            {
+                <option value="@size.Id" selected>@size.Name</option>
+            }
+            <!-- To add new sizes, use select options -->
+            @foreach (var newSize in Model.NewSizes)
+            {
+                <option value="@newSize.Id">@newSize.Name</option>
+            }
+        </select>
+        <span asp-validation-for="SizeIds" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="ColorIds">Colors:</label>
+        <select id="ColorIds" class="selectpicker" name="ColorIds" asp-for="ColorIds" multiple data-live-search="true">
+            <option disabled>Select the color or colors</option>
+            <!-- You can use Model.Colors to display existing colors -->
+            @foreach (var color in Model.Colors)
+            {
+                <option value="@color.Id" selected>@color.Name</option>
+            }
+            <!-- To add new colors, use select options -->
+            @foreach (var newColor in Model.NewColors)
+            {
+                <option value="@newColor.Id">@newColor.Name</option>
+            }
+        </select>
+        <span asp-validation-for="ColorIds" class="invalid-feedback" style="display: block"></span>
+
+        <label asp-for="Image">Image:</label>
+        <input type="file" id="Image" name="Image" asp-for="Image" required>
+        <span asp-validation-for="Image" class="invalid-feedback" style="display: block"></span>
+
+        <img style="object-fit:cover" src="@Model.ImageUrl" />
+        <button class="backButton" type="button" onclick="goBack()">Back</button>
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        // Back button functionality
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+</html>
