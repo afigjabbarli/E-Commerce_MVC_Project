@@ -7,7 +7,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
     public class DashboardController : Controller
     {
         [HttpGet("index")]
-        public IActionResult Index()
+        public Microsoft.AspNetCore.Mvc.IActionResult Index()
         {
             return View();
         }

@@ -29,7 +29,7 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
         public int[] ColorIds { get; set; }
         public List<Color>? Colors { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Required(ErrorMessage = "You must add a product image.")]
         public IFormFile Image { get; set; }

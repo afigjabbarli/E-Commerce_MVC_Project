@@ -108,7 +108,7 @@ img {
             <option disabled>Select the color or colors</option>
             @foreach (var category in Model.Categories)
             {
-                <option value="@category.Id" selected>@category.Name</option>
+                <option selected disabled>@category.Name</option>
             }
             <!-- To add new categories, use select options -->
             @foreach (var newCategory in Model.NewCategories)
@@ -124,7 +124,7 @@ img {
             <!-- You can use Model.Sizes to display existing sizes -->
             @foreach (var size in Model.Sizes)
             {
-                <option value="@size.Id" selected>@size.Name</option>
+                <option selected disabled>@size.Name</option>
             }
             <!-- To add new sizes, use select options -->
             @foreach (var newSize in Model.NewSizes)
@@ -140,7 +140,7 @@ img {
             <!-- You can use Model.Colors to display existing colors -->
             @foreach (var color in Model.Colors)
             {
-                <option value="@color.Id" selected>@color.Name</option>
+                <option selected disabled>@color.Name</option>
             }
             <!-- To add new colors, use select options -->
             @foreach (var newColor in Model.NewColors)

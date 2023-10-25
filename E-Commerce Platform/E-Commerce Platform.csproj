@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\ViewComponents\**" />
     <Compile Remove="Views\Shared\Components\**" />
+    <Content Remove="Areas\Admin\ViewComponents\**" />
     <Content Remove="Views\Shared\Components\**" />
+    <EmbeddedResource Remove="Areas\Admin\ViewComponents\**" />
     <EmbeddedResource Remove="Views\Shared\Components\**" />
+    <None Remove="Areas\Admin\ViewComponents\**" />
     <None Remove="Views\Shared\Components\**" />
   </ItemGroup>
 
@@ -28,9 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\ViewComponents\" />
     <Folder Include="wwwroot\assets\Client\" />
     <Folder Include="wwwroot\uploads\images\" />
+    <Folder Include="wwwroot\uploads\images\Products\" />
   </ItemGroup>
 
 </Project>
