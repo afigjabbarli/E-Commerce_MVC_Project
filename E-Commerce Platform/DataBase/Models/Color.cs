@@ -1,5 +1,8 @@
-﻿namespace E_Commerce_Platform.DataBase.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace E_Commerce_Platform.DataBase.Models
 {
+    
     public class Color
     {
         public int Id { get; set; } 

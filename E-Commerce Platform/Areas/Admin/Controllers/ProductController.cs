@@ -4,7 +4,6 @@ using E_Commerce_Platform.DataBase;
 using E_Commerce_Platform.DataBase.Models;
 using E_Commerce_Platform.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
 
 namespace E_Commerce_Platform.Areas.Admin.Controllers
 {
@@ -59,7 +58,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                 newProduct.PhysicalImageName = _fileService
                     .Upload(viewModel.Image, CustomUploadDirectories.Products);
             }
-
+           
             _DBContext.Products.Add(newProduct);
             ///Category start...
             foreach (var categoryID in viewModel.CategoryIds)
@@ -96,6 +95,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                     Product = newProduct
                 };
                 _DBContext.ProductSizes.Add(productSize);
+                
             }
             ///Size  end...
             ///
@@ -125,6 +125,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
         {
             var products = _DBContext.Products.OrderBy(p => p.CreatedAt).ToList();
             var productList = ConvertProductsToViewModel(products);
+            var colors = _DBContext.Colors.ToList();
             return View(productList);
         }
         public List<ProductListItemViewModel> ConvertProductsToViewModel(List<Product> products)
@@ -316,17 +317,17 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                 System.IO.File.Delete(previousFullPath);
             }
 
-          
+
 
             List<ProductColor> existProductColors = new List<ProductColor>();
             List<ProductSize> existProductSizes = new List<ProductSize>();
             List<CategoryProduct> existCategoryProducts = new List<CategoryProduct>();
             var ProductColors = _DBContext.ProductColors.Where(pc => pc.ProductId == product.Id).ToList();
             existProductColors.AddRange(ProductColors);
-            var ProductSizes = _DBContext.ProductSizes.Where(ps => ps.ProductId == product.Id).ToList();  
+            var ProductSizes = _DBContext.ProductSizes.Where(ps => ps.ProductId == product.Id).ToList();
             existProductSizes.AddRange(ProductSizes);
             var CategoryProducts = _DBContext.CategoryProducts.Where(cp => cp.ProductId == product.Id).ToList();
-            existCategoryProducts.AddRange(CategoryProducts);   
+            existCategoryProducts.AddRange(CategoryProducts);
 
             #region Category
             foreach (var categoryID in model.CategoryIds)
@@ -364,7 +365,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                 {
                     existProductColors.Remove(_DBContext.ProductColors.SingleOrDefault(pc => pc.ColorId.Equals(colorID) && pc.ProductId.Equals(product.Id))!);
                 }
-               
+
             }
             #endregion
 
@@ -388,7 +389,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                     existProductSizes.Remove(_DBContext.ProductSizes.SingleOrDefault(ps => ps.SizeId.Equals(sizeID) && ps.ProductId.Equals(product.Id))!);
 
                 }
-              
+
             }
 
             #endregion
