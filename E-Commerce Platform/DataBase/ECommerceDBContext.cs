@@ -234,7 +234,7 @@ namespace E_Commerce_Platform.DataBase
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -1,
-                    Name = "Game consoles and accessories",
+                    Name = "Game consoles",
                     Description = "Game consoles and accessories refer to the hardware and peripherals used for playing video games. Game consoles are specialized electronic devices designed primarily for gaming and typically come with built-in gaming capabilities, controllers, and other features. Accessories, on the other hand, are add-ons or enhancements that can improve the gaming experience. Common game consoles include products from companies like Sony (PlayStation), Microsoft (Xbox), and Nintendo, while accessories can encompass items like extra controllers, virtual reality headsets, gaming keyboards and mice, steering wheels, and more. Gamers often invest in these accessories to enhance their gameplay and overall enjoyment of video games."
                 }
             );

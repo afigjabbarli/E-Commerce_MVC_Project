@@ -18,7 +18,7 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         [Required(ErrorMessage = "At least one category must be selected.")]
         public int[] CategoryIds { get; set; }
-        public List<Category>? Categories { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Category>? Categories { get; set; }
 
         [Required(ErrorMessage = "At least one size must be selected.")]
         public int[] SizeIds { get; set; }

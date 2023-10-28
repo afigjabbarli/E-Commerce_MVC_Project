@@ -12,6 +12,6 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         public List<Color> Colors { get; set; } 
         public List<Size> Sizes { get; set; }   
-        public List<Category> Categories { get; set; }  
+        public List<E_Commerce_Platform.DataBase.Models.Category> Categories { get; set; }  
     }
 }

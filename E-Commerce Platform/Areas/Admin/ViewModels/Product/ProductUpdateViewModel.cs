@@ -19,7 +19,7 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         [Required(ErrorMessage = "At least one category must be selected.")]
         public int[] CategoryIds { get; set; }
-        public List<Category>? Categories { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Category>? Categories { get; set; }
 
         [Required(ErrorMessage = "At least one size must be selected.")]
         public int[] SizeIds { get; set; }
@@ -36,6 +36,6 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         public List<Color>? NewColors { get; set; }
         public List<Size>? NewSizes { get; set; }
-        public List<Category>? NewCategories { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Category>? NewCategories { get; set; }
     }
 }

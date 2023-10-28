@@ -3,6 +3,7 @@ using System;
 using E_Commerce_Platform.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace E_Commerce_Platform.Migrations
 {
     [DbContext(typeof(ECommerceDBContext))]
-    partial class ECommerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231027194834_Category-seeding")]
+    partial class Categoryseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace E_Commerce_Platform.Migrations
                             Id = -1,
                             CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Game consoles and accessories refer to the hardware and peripherals used for playing video games. Game consoles are specialized electronic devices designed primarily for gaming and typically come with built-in gaming capabilities, controllers, and other features. Accessories, on the other hand, are add-ons or enhancements that can improve the gaming experience. Common game consoles include products from companies like Sony (PlayStation), Microsoft (Xbox), and Nintendo, while accessories can encompass items like extra controllers, virtual reality headsets, gaming keyboards and mice, steering wheels, and more. Gamers often invest in these accessories to enhance their gameplay and overall enjoyment of video games.",
-                            Name = "Game consoles",
+                            Name = "Game consoles and accessories",
                             UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });

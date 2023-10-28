@@ -1,0 +1,287 @@
+﻿@using E_Commerce_Platform.Areas.Admin.ViewModels.Category;
+@model List<CategoryListItemViewModel>
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Category List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btns
+        {
+            width: 150px;
+            margin:5px;
+        }
+
+        .close-details-category-modal:hover{
+            background-color:red;
+        }
+
+        .close-add-edit-category-modal:hover {
+            background-color: red;
+        }
+
+      
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-4">Category List</h1>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row justify-content-between">
+                            <div class="col-3">
+                                <button id="btnAddCategory" class="btn btn-primary">
+                                    + Add New Category
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="categories-table" class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var category in Model)
+                                    {
+                                        <tr data-category-id="@category.Id">
+                                            <td>@category.Id</td>
+                                            <td>@category.Name</td>
+                                            <td>@category.Description</td>
+                                            <td >
+                                                <a class="btn btns btn-info btn-show-details" data-toggle="modal" data-target="#categoryDetailsModal" data-category-id="@category.Id">
+                                                    Details
+                                                </a>
+
+                                                <a class="btn btns btn-info btn-update-category-details btn-warning" data-category-id="@category.Id">
+                                                    Edit
+                                                </a>
+                                                <button class="btn btns btn-danger btn-delete" data-category-id="@category.Id">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add and Edit Category Modal Dialog (hidden by default) -->
+    <div id="addEditCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addEditCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;" id="addEditCategoryModalLabel">+Add New Category</h4>
+                    <button type="button" class="close-add-edit-category-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="categoryForm">
+                        <div class="form-group">
+                            <label for="categoryName">Category Name:</label>
+                            <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Please enter category name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryDescription">Category Description:</label>
+                            <textarea class="form-control" id="categoryDescription" name="categoryDescription" placeholder="Please enter category description" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-add-edit-category-modal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveCategory">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Details Category Modal Dialog (hidden by default) -->
+    <div id="categoryDetailsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryDetailsModalLabel" style="color:black">Category Details</h5>
+                    <button type="button" class="close close-details-category-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>ID:</strong> <span id="categoryDetailsId"></span></p>
+                    <p><strong>Name:</strong> <span style="color:blue; margin:6px; font-size:25px;" id="categoryDetailsName"></span></p>
+                    <p><strong>Description:</strong> <span id="categoryDetailsDescription"></span></p>
+                    <p><strong>Created At:</strong> <span id="categoryDetailsCreatedAt"></span></p>
+                    <p><strong>Last Updated At:</strong> <span id="categoryDetailsLastUpdatedAt"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-details-category-modal" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        $(".close-add-edit-category-modal").click(function () {
+            $('#addEditCategoryModal').modal('hide');
+            
+        })
+
+        $(".close-details-category-modal").click(function () {
+            $('#categoryDetailsModal').modal('hide');
+
+        })
+
+       
+        $(document).ready(function () {
+            
+            $("#btnAddCategory").click(function () {
+                $("#categoryForm")[0].reset(); 
+                $("#addEditCategoryModal").modal("show");
+            });
+
+          
+            $("#btnSaveCategory").click(function () {
+             
+                var categoryName = $("#categoryName").val();
+                var categoryDescription = $("#categoryDescription").val();
+
+               
+                var data = {
+                    Name: categoryName,
+                    Description: categoryDescription
+                };
+
+                $.ajax({
+                    url: "/admin/categories/add", 
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data), 
+                    success: function (response) {
+                        if (response.success) {
+                            // Yeni setrin elave olunmasi...
+                            var newRow = "<tr data-category-id='" + response.id + "'>" +
+                                "<td>" + response.id + "</td>" +
+                                "<td>" + response.name + "</td>" +
+                                "<td>" + response.description + "</td>" +
+                                "<td>" +
+                                "<a class='btn btns btn-info btn-show-details' data-toggle='modal' data-target='#categoryDetailsModal' data-category-id='" + response.id + "'>" +
+                                "Details" +
+                                "</a>" +
+                                "<a class='btn btns btn-info btn-update-category-details btn-warning' data-category-id='" + response.id + "'>" +
+                                "Edit" +
+                                "</a>" +
+                                "<button class='btn btns btn-danger btn-delete' data-category-id='" + response.id + "'>" +
+                                "Delete" +
+                                "</button>" +
+                                "</td>" +
+                                "</tr>";
+
+                            $("#categories-table tbody").append(newRow);
+                            //Yeni setrin elave olunmasi...
+                            //alert("Succes message: " + response.succesMessage) => //Succes mesajinin ekrana chixarilmasi...
+                            console.log("Hello World");
+                            $('#addEditCategoryModal').modal('hide');
+                            
+                        } else {
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function (response) {
+                        alert("Error: " + response.message);
+                    }
+                });
+            });
+
+
+            $(document).on("click", ".btn-delete", function () {
+                var categoryId = $(this).data("category-id");
+                var row = $(`tr[data-category-id='${categoryId}']`); 
+
+                if (confirm('Are you sure to delete?')) {
+                   
+                    $.ajax({
+                        url: "/admin/categories/delete/" + categoryId,
+                        type: "POST",
+                        contentType: "application/json", 
+                        data: JSON.stringify({ categoryId: categoryId }), 
+                        success: function (response) {
+                            if (response.success) {
+                                row.remove();
+                               
+                            } else {
+                                alert("Error: " + response.message);
+                            }
+                        },
+                        error: function (response) {
+                            alert("Error: " + response.message);
+                        }
+                    });
+                }
+            });
+
+
+
+
+            $(document).on("click", ".btn-show-details", function () {
+                var categoryId = $(this).data("category-id");
+                $('#categoryDetailsModal').modal("show");
+
+                $.ajax({
+                    url: "/admin/categories/details/" + categoryId,
+                    type: "Get",
+                    contentType: "application/json",
+                    data: JSON.stringify({ categoryId: categoryId }),
+                    success: function (response) {
+                        if (response.success) {
+                           
+                            
+                            $("#categoryDetailsId").text(response.id);
+                            $("#categoryDetailsName").text(response.name);
+                            $("#categoryDetailsDescription").text(response.description);
+                            $("#categoryDetailsCreatedAt").text(response.createdAt);
+                            $("#categoryDetailsLastUpdatedAt").text(response.createdAt);
+                        } else {
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function (response) {
+                        alert("Error: " + response.message);
+                    }
+                });
+
+               
+            });
+
+
+
+        });
+    </script>
+</body>
+</html>
