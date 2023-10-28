@@ -28,7 +28,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Assuming you have a Category model, create an instance and populate it
+               
                 var newCategory = new Category
                 {
                     Name = category.Name,
@@ -37,16 +37,16 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                     UpdatedAt = DateTime.UtcNow,
                 };
 
-                // Add the new category to your database
+             
                 _dbContext.Categories.Add(newCategory);
                 _dbContext.SaveChanges();
 
-                // Return a JSON response to indicate success and provide the new category's ID
+              
                 return Json(new { success = true, id = newCategory.Id, name = newCategory.Name, description = newCategory.Description, succesMessage = "New category succesfully added...Thanks:)" });
             }
             else
             {
-                // If the ModelState is not valid, return an error response
+               
                 return Json(new { success = false, message = "Invalid data." });
             }
         }
@@ -62,7 +62,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
             }
             else
             {
-                // If the ModelState is not valid, return an error response
+               
                 return Json(new { success = false, message = "Invalid data." });
             }
         }
@@ -79,7 +79,38 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Invalid data." });
             }
         }
-
+        [HttpGet("update/{categoryId}")]
+        public IActionResult Update([FromRoute] int categoryId)
+        {
+            var category = _dbContext.Categories.Single(ct => ct.Id == categoryId);
+            if (category is null)
+            {
+                return Json(new { success = false, message = "Invalid data." });
+            }
+            return Json(new { success = true, Id = category.Id, Name = category.Name, Description = category.Description, CreatedAt = category.CreatedAt, UpdatedAt = category.UpdatedAt, message = "Category information found successfully..." });
+        }
+        [HttpPost("update/{categoryId}")]
+        public IActionResult Update([FromBody] CategoryAddViewModel newCategory, [FromRoute] int categoryId)
+        {
+            if(ModelState.IsValid)
+            {
+                var category = _dbContext.Categories.SingleOrDefault(c => c.Id.Equals(categoryId));
+                if (category is null)
+                {
+                    return Json(new { success = false, message = "Invalid data.Category not available!" });
+                }
+                category.UpdatedAt = DateTime.UtcNow;
+                category.Name = newCategory.Name;
+                category.Description = newCategory.Description; 
+                _dbContext.Categories.Update(category);
+                _dbContext.SaveChanges();
+                return Json(new { success = true, Id = category.Id, Name = newCategory.Name, Description = newCategory.Description, CreatedAt = category.CreatedAt, UpdatedAt = category.UpdatedAt, message = "Category successfully updated..." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Invalid data." });
+            }
+        }
     }
     
 }

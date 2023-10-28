@@ -23,6 +23,9 @@
             background-color: red;
         }
 
+        .close-edit-category-modal:hover{
+            background-color: red;
+        }
       
     </style>
 
@@ -113,15 +116,44 @@
             </div>
         </div>
     </div>
-
-
+    <!-- Edit Category Modal Start -->
+    <div id="EditCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="EditCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color:black;" id="EditCategoryModalLabel">Edit current category</h4>
+                    <button type="button" class="close-edit-category-modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCategoryForm">
+                        <input type="hidden" id="updateable-category-id" value="" disabled/>
+                        <div class="form-group">
+                            <label for="editCategoryName">Category Name:</label>
+                            <input type="text" class="form-control" id="editCategoryName" name="editCategoryName" placeholder="Please enter category name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editCategoryDescription">Category Description:</label>
+                            <textarea class="form-control" id="editCategoryDescription" name="editCategoryDescription" placeholder="Please enter category description" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-edit-category-modal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdateCategory">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Category Modal End -->
 
     <!-- Details Category Modal Dialog (hidden by default) -->
     <div id="categoryDetailsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="categoryDetailsModalLabel" style="color:black">Category Details</h5>
+                    <h5 class="modal-title" id="categoryDetailsModalLabel" style="color:black">Category Details <i class="fa-solid fa-circle-info fa-xl" style="color: #005eff;margin-left:5px;"></i></h5>
                     <button type="button" class="close close-details-category-modal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,6 +183,11 @@
         $(".close-add-edit-category-modal").click(function () {
             $('#addEditCategoryModal').modal('hide');
             
+        })
+
+        $(".close-edit-category-modal").click(function () {
+            $('#EditCategoryModal').modal('hide');
+
         })
 
         $(".close-details-category-modal").click(function () {
@@ -278,6 +315,90 @@
 
                
             });
+
+
+            $(document).on("click", ".btn-update-category-details", function () {
+                  var categoryId = $(this).data("category-id");
+                  $.ajax({
+                      url: "/admin/categories/update/" + categoryId,
+                      type: "Get",
+                      contentType: "application/json",
+                      data: JSON.stringify({ categoryId: categoryId }),
+                      success: function (response) {
+                           if (response.success) 
+                           {
+                              $("#editCategoryForm")[0].reset();
+                              $("#editCategoryName").val(response.name);
+                              $("#editCategoryDescription").val(response.description);
+                              $("#updateable-category-id").val(response.id);
+                              $("#EditCategoryModal").modal("show");
+                           } 
+                           else 
+                           { 
+                              alert("Error: " + response.message);
+                           }
+                      },
+                        error: function (response) {
+                           alert("Error: " + response.message);
+                        }
+                  })
+            })
+
+
+            $(document).on("click", "#btnUpdateCategory", function(){
+                var ID = $("#updateable-category-id").val();
+                var categoryName = $("#editCategoryName").val();
+                var categoryDescription = $("#editCategoryDescription").val();
+
+                var row = $(`tr[data-category-id='${ID}']`);
+
+                var data = {
+                    id: ID,
+                    name: categoryName,
+                    description: categoryDescription
+                }
+                $.ajax({
+                    url: "/admin/categories/update/" + ID,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        if (response.success) {
+                            console.log(response);
+                            row.remove();
+
+
+                            var newRow = "<tr data-category-id='" + response.id + "'>" +
+                                "<td>" + response.id + "</td>" +
+                                "<td>" + response.name + "</td>" +
+                                "<td>" + response.description + "</td>" +
+                                "<td>" +
+                                "<a class='btn btns btn-info btn-show-details' data-toggle='modal' data-target='#categoryDetailsModal' data-category-id='" + response.id + "'>" +
+                                "Details" +
+                                "</a>" +
+                                "<a class='btn btns btn-info btn-update-category-details btn-warning' data-category-id='" + response.id + "'>" +
+                                "Edit" +
+                                "</a>" +
+                                "<button class='btn btns btn-danger btn-delete' data-category-id='" + response.id + "'>" +
+                                "Delete" +
+                                "</button>" +
+                                "</td>" +
+                                "</tr>";
+
+                            $("#categories-table tbody").append(newRow);
+
+                            $("#EditCategoryModal").modal("hide");
+
+                        } else {
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function (response) {
+                        alert("Error: " + response.message);
+                    }
+                });
+            })
+
 
 
 
