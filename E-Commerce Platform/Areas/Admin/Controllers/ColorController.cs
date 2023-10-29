@@ -50,5 +50,44 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
             _dbContext.SaveChanges();
             return Json(new { success = true, id = removableColor.Id });
         }
+        [HttpGet("details/{colorId}")]
+        public IActionResult Details([FromRoute] int colorId)
+        {
+            var color = _dbContext.Colors.SingleOrDefault(c => c.Id == colorId);
+            if (color is null) return Json(new { success = false, message = "Invalid data!" });
+            var colorDetails = new ColorDetailsViewModel
+            {
+                Id = color.Id,
+                Name = color.Name,
+                Code = color.Code,
+                CreatedAt = color.CreatedAt,
+                UpdatedAt = color.UpdatedAt,
+            };
+            return Json(new { success = true, colorDetails, message = "Color information found successfully..." });
+        }
+        [HttpGet("update/{colorId}")]
+        public IActionResult Update([FromRoute] int colorId)
+        {
+            var color = _dbContext.Colors.SingleOrDefault(c => c.Id.Equals(colorId));
+            if (color is null) return Json(new { success = false, message = "Invalid data!" });
+            else return Json(new { success = true, id = color.Id, code = color.Code, name = color.Name, message = "Color information found successfully..." });
+        }
+        [HttpPost("update/{colorId}")]
+        public IActionResult Update([FromRoute] int colorId, [FromBody] ColorAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                 var color = _dbContext.Colors.SingleOrDefault(c => c.Id.Equals(colorId));
+                 if (color is null) return Json(new { success = false, message = "Invalid data...Category not available!" });
+                 color.Name = model.colorName;
+                 color.Code = model.colorCode;
+                 color.UpdatedAt = DateTime.UtcNow;  
+                 _dbContext.Colors.Update(color);    
+                 _dbContext.SaveChanges();
+                 return Json(new { success = true, id = color.Id, name = color.Name, code = color.Code });
+
+            }
+            return Json(new { success = false, message = "Invalid data." });
+        }    
     }
 }

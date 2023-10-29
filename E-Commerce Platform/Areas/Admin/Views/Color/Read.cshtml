@@ -96,6 +96,10 @@
             cursor: pointer;
         }
 
+        #CloseColorDetailsModal:hover{
+            background-color:red;
+        }
+
             #back-button:hover {
                 background-color: #333;
             }
@@ -174,6 +178,72 @@
 
 
   @*  Add new color section end*@
+
+  @*Color details modal start...*@
+
+    <div class="modal fade" id="colorDetailsModal" tabindex="-1" role="dialog" aria-labelledby="colorDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="colorDetailsModalLabel" style="color:black">Color details</h4>
+                    <button type="button" id="CloseColorDetailsModal" onclick="CloseColorDetailsModal()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   
+                    <p>Name:<strong><span style="margin-left:10px; color:red;" id="colorDetailsName"></span></strong></p>
+                    <p>ID:<strong><span style="margin-left:10px; color:red;" id="colorDetailsID"></span></strong></p>
+                    <p>Color_Code:<strong><span style="margin-left:10px; color:red;" id="colorDetailsCode"></span></strong></p>
+                    <p>Created_At:<strong><span style="margin-left:10px; color:red;" id="colorDetailsCreatedAt"></span></strong></p>
+                    <p>Updated_At:<strong><span style="margin-left:10px; color:red;" id="colorDetailsUpdatedAt"></span></strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="CloseColorDetailsModal" onclick="CloseColorDetailsModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*Color details modal end...*@
+
+
+   @* color update modal start*@
+
+    <div class="modal fade" id="color-update-modal" tabindex="-1" role="dialog" aria-labelledby="color-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="color-modal-label" style="color:black;">Update current color</h4>
+                    <button type="button" style="background-color:red;" onclick="CloseUpdateColorModal()" id="Close-Update-Color-Modal" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="update-color-form">
+                        <input type="hidden" id="updateable-color-id" value="" disabled />
+                        <div class="form-group">
+                            <label for="color-name">Color Name:</label>
+                            <input type="text" style="color:white" placeholder="Pls enter color name..." class="form-control" id="updateable-color-name" name="color-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="color-code">Color Code:</label>
+                            <input type="color" class="form-control" id="updateable-color-code" name="color-code" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" style="background-color:red;" onclick="CloseUpdateColorModal()" id="Close-Add-New-Color-Modal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update-current-color-button" style="background-color:green;">Update Color</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*color update modal end*@
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -183,7 +253,15 @@
         }
 
         function goBack() {
-            alert("Go Back");
+            window.history.back();
+        }
+
+        function CloseColorDetailsModal() {
+            $('#colorDetailsModal').modal('hide');
+        }
+
+        function CloseUpdateColorModal(){
+            $('#color-update-modal').modal('hide');
         }
 
         $(document).ready(function () {
@@ -263,6 +341,111 @@
                 }
             })
 
+            $(document).on("click", ".btn-show-color-details", function(){
+                var colorId = $(this).data("category-id")
+
+                $.ajax({
+                    url: "/admin/colors/details/" + colorId,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ colorId: colorId }),
+                    success: function(response){
+                         if(response.success){
+
+
+                            $("#colorDetailsID").text(response.colorDetails.id);
+                            $("#colorDetailsName").text(response.colorDetails.name);
+                            $("#colorDetailsCode").text(response.colorDetails.code);
+                            $("#colorDetailsCreatedAt").text(response.colorDetails.createdAt);
+                            $("#colorDetailsUpdatedAt").text(response.colorDetails.createdAt);
+
+                            
+                        
+                            $("#colorDetailsModal").modal("show");
+
+                         }
+                         else{
+                            alert("Error: " + response.message);
+                         }
+                    },
+                    error: function (response) {
+                        alert("Error: " + response.message);
+                    }
+                })
+            })
+
+
+            $(document).on("click", ".btn-update-color", function(){
+                var colorId = $(this).data("category-id");
+                $.ajax({
+                    url: "/admin/colors/update/" + colorId,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ colorId: colorId }),
+                    success: function(response){
+                        if (response.success){
+                            $("#update-color-form")[0].reset();
+                            $("#updateable-color-id").val(response.id)
+                            $("#updateable-color-name").val(response.name);
+                            $("#updateable-color-code").val(response.code);
+                            $("#color-update-modal").modal("show");
+                        }
+                        else{
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function (response) {
+                        alert("Error: " + response.message);
+                    }
+                })
+            })
+
+
+            $(document).on("click", "#update-current-color-button", function(){
+                var colorId = $("#updateable-color-id").val();
+                var name = $("#updateable-color-name").val();
+                var code = $("#updateable-color-code").val();
+                var row = $(`tr[data-category-id='${colorId}']`);
+                var Data = {
+                    colorName: name,
+                    colorCode: code,
+                   
+                };
+
+                $.ajax({
+                    url: "/admin/colors/update/" + colorId,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(Data),
+                    success: function(response){
+                        if(response.success){
+                            row.remove();
+
+                            var newRow = "<tr data-category-id='" + response.id + "'>" +
+                                "<td>" + response.id + "</td>" +
+                                "<td>" + response.name + "</td>" +
+                                "<td>" + response.code + "</td>" +
+                                "<td><div class='color-square' style='background-color:" + response.code + "'></div></td>" +
+                                "<td class='action-buttons'>" +
+                                "<button class='btn-show-color-details' data-category-id='" + response.id + "'><i class='fas fa-eye'></i>View</button>" +
+                                "<button class='btn-update-color' data-category-id='" + response.id + "'><i class='fas fa-edit'></i>Edit</button>" +
+                                "<button class='btn-update-color' data-category-id='" + response.id + "'><i class='fas fa-trash-alt btn-delete-color'></i>Delete</button>" +
+                                "</td>" +
+                                "</tr>";
+
+                            $("#colors-table tbody").append(newRow);
+
+                            $("#color-update-modal").modal("hide");
+                        }
+                        else{
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function(response){
+                        alert("Error: " + response.message);
+                    }
+                })
+            })
 
 
         });
