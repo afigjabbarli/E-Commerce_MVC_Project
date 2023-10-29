@@ -79,36 +79,57 @@ namespace E_Commerce_Platform.DataBase
                 {
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -7,
+                    Name = "Yellow",
+                    Code = "#fbff00"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    Id = -6,
+                    Name = "Green",
+                    Code = "#04b40f"
+                },
+                new Color
+                {
+                    UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -5,
-                    Name = "Black"
+                    Name = "Black",
+                    Code = "#000000"
                 },
                 new Color
                 {
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -4,
-                    Name = "Gray"
+                    Name = "Gray",
+                    Code = "#666666"
                 },
                 new Color
                 {
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -3,
-                    Name = "Blue"
+                    Name = "Blue",
+                    Code = "#0052d6"
                 },
                 new Color
                 {
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -2,
-                    Name = "White"
+                    Name = "White",
+                    Code = "#ffffff"
                 },
                 new Color
                 {
                     UpdatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     CreatedAt = new DateTime(2023, 10, 19, 0, 0, 0, DateTimeKind.Utc),
                     Id = -1,
-                    Name = "Red"
+                    Name = "Red",
+                    Code = "#ff0000"
                 }
             );
             ////// Color Seeding ended

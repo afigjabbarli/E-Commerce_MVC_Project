@@ -26,7 +26,7 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         [Required(ErrorMessage = "At least one color must be selected.")]
         public int[] ColorIds { get; set; }
-        public List<Color>? Colors { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Color>? Colors { get; set; }
 
         [Required(ErrorMessage = "You must add a product image.")]
         public IFormFile Image { get; set; }

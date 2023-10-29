@@ -10,7 +10,7 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
 
-        public List<Color> Colors { get; set; } 
+        public List<E_Commerce_Platform.DataBase.Models.Color> Colors { get; set; } 
         public List<Size> Sizes { get; set; }   
         public List<E_Commerce_Platform.DataBase.Models.Category> Categories { get; set; }  
     }

@@ -27,14 +27,14 @@ namespace E_Commerce_Platform.Areas.Admin.ViewModels.Product
 
         [Required(ErrorMessage = "At least one color must be selected.")]
         public int[] ColorIds { get; set; }
-        public List<Color>? Colors { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Color>? Colors { get; set; }
 
         public string? ImageUrl { get; set; }
 
         [Required(ErrorMessage = "You must add a product image.")]
         public IFormFile Image { get; set; }
 
-        public List<Color>? NewColors { get; set; }
+        public List<E_Commerce_Platform.DataBase.Models.Color>? NewColors { get; set; }
         public List<Size>? NewSizes { get; set; }
         public List<E_Commerce_Platform.DataBase.Models.Category>? NewCategories { get; set; }
     }

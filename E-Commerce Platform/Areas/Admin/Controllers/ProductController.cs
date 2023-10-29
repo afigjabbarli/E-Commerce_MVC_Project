@@ -122,6 +122,7 @@ namespace E_Commerce_Platform.Areas.Admin.Controllers
         }
         [HttpGet("read")]
         public Microsoft.AspNetCore.Mvc.IActionResult Read()
+        
         {
             var products = _DBContext.Products.OrderBy(p => p.CreatedAt).ToList();
             var productList = ConvertProductsToViewModel(products);
