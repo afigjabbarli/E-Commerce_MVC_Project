@@ -22,6 +22,15 @@ namespace E_Commerce_Platform.DataBase
 
             base.OnModelCreating(modelBuilder);
 
+            ///UserVerificationToken start region
+
+            modelBuilder.Entity<UserVerificationToken>()
+                .HasOne<User>(uvt => uvt.User)
+                .WithMany(u => u.VerificationTokens)
+                .HasForeignKey(uvt => uvt.UserID);
+
+            ///UserVerificationToken end region
+
             ///CategoryProduct start region
 
             modelBuilder.Entity<CategoryProduct>().HasKey(cp => new { cp.ProductId, cp.CategoryId });
@@ -271,6 +280,7 @@ namespace E_Commerce_Platform.DataBase
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }  
+        public DbSet<UserVerificationToken> UserVerificationTokens { get; set; }    
 
     }
 }

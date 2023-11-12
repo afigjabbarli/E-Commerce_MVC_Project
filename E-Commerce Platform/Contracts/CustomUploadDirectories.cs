@@ -2,6 +2,7 @@
 {
     public enum CustomUploadDirectories
     {
-        Products = 0
+        Products = 0,
+        Users = 1
     }
 }

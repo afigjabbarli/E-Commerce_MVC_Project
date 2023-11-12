@@ -17,7 +17,12 @@ namespace E_Commerce_Platform.Services.Concretes
             {
                 _dbContext = dbContext;
             }
-
+            public string GenerateRandomVerificationToken()
+            {
+                Guid guid = Guid.NewGuid();
+                string token = guid.ToString();  
+                return token;
+            }
             public string GenerateMembershipPassword()
             {
                 const string prefix = "USR";

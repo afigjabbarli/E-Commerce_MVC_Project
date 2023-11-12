@@ -3,6 +3,7 @@ using System;
 using E_Commerce_Platform.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace E_Commerce_Platform.Migrations
 {
     [DbContext(typeof(ECommerceDBContext))]
-    partial class ECommerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231112042604_Add_UserVerificationToken_Table_To_Database")]
+    partial class Add_UserVerificationToken_Table_To_Database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,9 +427,6 @@ namespace E_Commerce_Platform.Migrations
                     b.Property<byte>("Gender")
                         .HasColumnType("smallint");
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -476,9 +475,8 @@ namespace E_Commerce_Platform.Migrations
                     b.Property<DateTime>("ExpireDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("Token")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("UserID")
                         .HasColumnType("integer");

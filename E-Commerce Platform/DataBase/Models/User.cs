@@ -15,12 +15,13 @@ namespace E_Commerce_Platform.DataBase.Models
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public DateTime DeletedAt { get; set; }
-        public bool IsDeleted { get; set; } 
-        public bool IsFrozen { get; set; }
+        public bool IsDeleted { get; set; } = false;    
+        public bool IsFrozen { get; set; } = false;
+        public bool IsConfirmed { get; set; } = false;   
         public Gender Gender { get; set; }  
         public decimal AccountBalance { get; set; }
         public string PhysicalImageName { get; set; }
-
+        public List<UserVerificationToken> VerificationTokens { get; set; } 
         public List<Email> Emails { get; set; }
 
     }
