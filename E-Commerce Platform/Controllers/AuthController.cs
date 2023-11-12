@@ -11,13 +11,15 @@ namespace E_Commerce_Platform.Controllers
     public class AuthController : Controller
     {
         private readonly ECommerceDBContext _dbContext;
-        private readonly VerificationService _verificationService;
+        private readonly IVerificationService _verificationService;
         private readonly IFileService _fileService;
-        public AuthController(ECommerceDBContext dbContext, VerificationService verificationService, IFileService fileService)
+        private readonly IEmailService _emailService;
+        public AuthController(ECommerceDBContext dbContext, IVerificationService verificationService, IFileService fileService, IEmailService emailService)
         {
             _dbContext = dbContext;
             _verificationService = verificationService;
             _fileService = fileService;
+            _emailService = emailService;
         }
         [HttpGet]   
         public IActionResult Register()
@@ -62,13 +64,18 @@ namespace E_Commerce_Platform.Controllers
                 Token = _verificationService.GenerateRandomVerificationToken(),
                 User = user
             };
-            ///Sending user activation token START...
-            
-            ///Sending user activation token END...
             _dbContext.UserVerificationTokens.Add(userVerificationToken);   
             _dbContext.Users.Add(user); 
             _dbContext.SaveChanges();
+            ///Sending user activation token START...
+            _emailService.SendActivationURL(user, userVerificationToken.Token);
+            ///Sending user activation token END...
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult Verify([FromQuery] int Id, [FromQuery] string token)
+        {
+            return View();  
         }
         [HttpGet]
         public IActionResult Login()

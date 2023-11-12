@@ -3,5 +3,6 @@
     public interface IVerificationService
     {
         string GenerateMembershipPassword();
+        string GenerateRandomVerificationToken();
     }
 }
