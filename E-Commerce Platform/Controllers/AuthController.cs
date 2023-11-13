@@ -1,6 +1,8 @@
 ﻿using BCrypt.Net;
+using E_Commerce_Platform.Constants;
 using E_Commerce_Platform.DataBase;
 using E_Commerce_Platform.DataBase.Models;
+using E_Commerce_Platform.DTOs;
 using E_Commerce_Platform.Services.Abstracts;
 using E_Commerce_Platform.Services.Concretes;
 using E_Commerce_Platform.ViewModels.User;
@@ -35,7 +37,7 @@ namespace E_Commerce_Platform.Controllers
             }
             if(_dbContext.Users.Any(u => u.Email == model.Email))
             {
-                TempData["ErrorMessage"] = "This email address is already available in the system!!!";
+                TempData["ErrorMessage"] = "This email is already available in the system!!!";
                 return RedirectToAction("ErrorPage", "Auth");
             }
             if(_dbContext.Users.Any(u => u.PIN.Equals(model.PIN)))
@@ -75,7 +77,36 @@ namespace E_Commerce_Platform.Controllers
         [HttpGet]
         public IActionResult Verify([FromQuery] int Id, [FromQuery] string token)
         {
-            return View();  
+            var user = _dbContext.Users.SingleOrDefault(u => u.Id.Equals(Id));
+            if(user is null)
+            {
+                TempData["ErrorMessage"] = "Your account is not aviable in the system!!!";
+                return RedirectToAction("ErrorPage", "Auth");
+            }
+            var verificationToken = _dbContext.UserVerificationTokens.SingleOrDefault(t => t.Token.Equals(token));
+            if(verificationToken is null)
+            {
+                TempData["ErrorMessage"] = "Your verification token is not aviable in the system!!!";
+                return RedirectToAction("ErrorPage", "Auth");
+            }
+            if(!(DateTime.UtcNow < verificationToken.ExpireDate))
+            {
+                TempData["ErrorMessage"] = "Your verification link is timeout!!!";
+                return RedirectToAction("ErrorPage", "Auth");
+            }
+            user.IsConfirmed = true;    
+            verificationToken.IsUsed = true;
+            var email = new EmailDTO
+            {
+                Recipients = new List<string> { user.Email },
+                Subject = "Membership password",
+                Body = EmailTemplate.MembershipPassword
+                .Replace("{surname}", user.Surname)
+                .Replace("{name}", user.Name)
+                .Replace("{membership_password}", user.MembershipPassword)
+            };
+            _emailService.SendEmail(email);
+            return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
         public IActionResult Login()

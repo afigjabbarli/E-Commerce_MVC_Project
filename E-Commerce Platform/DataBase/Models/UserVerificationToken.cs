@@ -6,6 +6,7 @@
         public string Token { get; set; } 
         public DateTime ExpireDate { get; set; }    
         public DateTime CreatedAt { get; set; } 
+        public bool IsUsed { get; set; }    
         public User User { get; set; }
         public int UserID { get; set; } 
     }
