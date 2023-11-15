@@ -15,13 +15,13 @@ namespace E_Commerce_Platform.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Email>()
             .HasOne<User>(e => e.User)
             .WithMany(u => u.Emails)
             .HasForeignKey(e => e.UserId);
-
-            base.OnModelCreating(modelBuilder);
-
             ///UserVerificationToken start region
 
             modelBuilder.Entity<UserVerificationToken>()
@@ -271,7 +271,7 @@ namespace E_Commerce_Platform.DataBase
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Email> Emails { get; }
+        public DbSet<Email> Emails { get; set; }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

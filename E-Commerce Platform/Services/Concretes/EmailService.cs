@@ -1,4 +1,5 @@
-﻿using E_Commerce_Platform.DataBase.Models;
+﻿using E_Commerce_Platform.DataBase;
+using E_Commerce_Platform.DataBase.Models;
 using E_Commerce_Platform.DTOs;
 using E_Commerce_Platform.Services.Abstracts;
 using MailKit.Net.Smtp;
@@ -10,13 +11,14 @@ namespace E_Commerce_Platform.Services.Concretes
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _configuration;
+        private readonly ECommerceDBContext _DBContext;
         private readonly string _from;
         private readonly string _password;
         private readonly int _port;
         private readonly string _host;
         private readonly string _username;
         private readonly string _server;
-        public EmailService(IConfiguration configuration)
+        public EmailService(IConfiguration configuration, ECommerceDBContext dBContext)
         {
             _configuration = configuration;
             _from = _configuration.GetValue<string>("MailSettings:EmailAdress");
@@ -25,6 +27,7 @@ namespace E_Commerce_Platform.Services.Concretes
             _host = _configuration.GetValue<string>("MailSettings:Host");
             _username = _configuration.GetValue<string>("MailSettings:Username");
             _server = _configuration.GetValue<string>("MailSettings:Server");
+            _DBContext = dBContext;
         }
         public void SendActivationURL(User user, string token)
         {
@@ -43,7 +46,20 @@ namespace E_Commerce_Platform.Services.Concretes
 
             };
             SendEmail(messageDto);
-
+            Email email = new Email
+            {
+                Sender = _configuration.GetValue<string>("MailSettings:EmailAdress"),
+                Recipients = new string[]
+                {
+                    user.Email
+                },
+                Subject = "Account activation URL - Electro ECommerce Online Shopping",
+                Content = messageDto.Body,
+                CreatedAt = DateTime.UtcNow,
+                UserId = user.Id,   
+            };
+            _DBContext.Emails.Add(email);   
+            _DBContext.SaveChanges();   
         }
 
         public void SendEmail(EmailDTO DTO)

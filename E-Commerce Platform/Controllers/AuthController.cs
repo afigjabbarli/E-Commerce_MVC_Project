@@ -16,12 +16,14 @@ namespace E_Commerce_Platform.Controllers
         private readonly IVerificationService _verificationService;
         private readonly IFileService _fileService;
         private readonly IEmailService _emailService;
-        public AuthController(ECommerceDBContext dbContext, IVerificationService verificationService, IFileService fileService, IEmailService emailService)
+        private readonly IConfiguration _configuration;
+        public AuthController(ECommerceDBContext dbContext, IVerificationService verificationService, IFileService fileService, IEmailService emailService, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _verificationService = verificationService;
             _fileService = fileService;
             _emailService = emailService;
+            _configuration = configuration;
         }
         [HttpGet]   
         public IActionResult Register()
@@ -74,29 +76,32 @@ namespace E_Commerce_Platform.Controllers
             ///Sending user activation token END...
             return RedirectToAction("Index", "Home");
         }
+            
         [HttpGet]
         public IActionResult Verify([FromQuery] int Id, [FromQuery] string token)
         {
             var user = _dbContext.Users.SingleOrDefault(u => u.Id.Equals(Id));
-            if(user is null)
+            if (user is null)
             {
                 TempData["ErrorMessage"] = "Your account is not aviable in the system!!!";
                 return RedirectToAction("ErrorPage", "Auth");
             }
             var verificationToken = _dbContext.UserVerificationTokens.SingleOrDefault(t => t.Token.Equals(token));
-            if(verificationToken is null)
+            if (verificationToken is null)
             {
                 TempData["ErrorMessage"] = "Your verification token is not aviable in the system!!!";
                 return RedirectToAction("ErrorPage", "Auth");
             }
-            if(!(DateTime.UtcNow < verificationToken.ExpireDate))
+            if (!(DateTime.UtcNow < verificationToken.ExpireDate))
             {
                 TempData["ErrorMessage"] = "Your verification link is timeout!!!";
                 return RedirectToAction("ErrorPage", "Auth");
             }
-            user.IsConfirmed = true;    
+            user.IsConfirmed = true;
             verificationToken.IsUsed = true;
-            var email = new EmailDTO
+            _dbContext.Update(user);
+            _dbContext.Update(verificationToken);
+            var emailDTO = new EmailDTO
             {
                 Recipients = new List<string> { user.Email },
                 Subject = "Membership password",
@@ -105,7 +110,16 @@ namespace E_Commerce_Platform.Controllers
                 .Replace("{name}", user.Name)
                 .Replace("{membership_password}", user.MembershipPassword)
             };
-            _emailService.SendEmail(email);
+            Email email = new Email();
+            email.Sender = _configuration.GetValue<string>("MailSettings:EmailAdress");
+            email.Recipients = new string[] { user.Email };
+            email.Subject = "Membership password";
+            email.Content = emailDTO.Body;
+            email.UserId = user.Id;
+            email.CreatedAt = DateTime.UtcNow;
+            _dbContext.Emails.Add(email);  
+            _dbContext.SaveChanges();   
+            _emailService.SendEmail(emailDTO);
             return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
