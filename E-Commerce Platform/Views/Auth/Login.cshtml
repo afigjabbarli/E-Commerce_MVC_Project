@@ -55,20 +55,20 @@
                     justify-content: space-between;
                 }
 
-                    .Login-container .Login-row #Login-form .Form-group {
-                        height: 75px;
+                    .Login-container .Login-row #Login-form .Form-group{
+                        height: 150px;
                         width: 100%;
-                        flex-wrap: wrap;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-around;
+                       
                     }
+                       
 
                         .Login-container .Login-row #Login-form .Form-group label {
                             color: rgb(197, 0, 0);
-                            width: 20%;
+                            width:100%;
+                            height:30%;
                             font-size: 20px;
                             font-weight: bold;
+                            
                         }
 
                     .Login-container .Login-row #Login-form .button-group {
@@ -112,16 +112,19 @@
                         }
 
                     .Login-container .Login-row #Login-form .Form-group input {
-                        width: 80%;
-                        height: 100%;
+                        width:100%;
+                        height: 50%;
+                        margin-top:25px;
                         border: 5px solid rgb(197, 0, 0);
                         border-radius: 6px;
-                    }
-
-                    .Login-container .Login-row #Login-form .Form-group input {
                         font-size: 20px;
                         color: black;
                     }
+
+                    .Login-container .Login-row #Login-form .Form-group span{
+                        height:20%;
+                    }
+                    
     </style>
 </head>
 <body>
@@ -134,14 +137,13 @@
                 </div>
 
                 <form id="Login-form" method="post" asp-controller="Auth" asp-action="Login">
+                   
                     <div class="Form-group">
-                        <label for="Email">Email</label>
-                        <input placeholder="Email" type="text" name="Email" asp-for="Email" id="Email">
+                        <label asp-for="MembershipPassword">Dear user, please enter your membership password:</label>
+                        <input placeholder="please enter your password..." type="password" name="MembershipPassword" asp-for="MembershipPassword" id="MembershipPassword">
+                        <span asp-validation-for="MembershipPassword" class="text-danger"></span>
                     </div>
-                    <div class="Form-group">
-                        <label for="Email_Password">Email password</label>
-                        <input placeholder="EmailPassword" type="password" name="Email_Password" asp-for="Email_Password" id="EmailPassword">
-                    </div>
+
                     <div class="button-group">
                         <button type="button" id="submit">Back</button>
                         <button type="submit" id="back">Login</button>

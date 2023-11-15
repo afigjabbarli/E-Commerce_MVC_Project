@@ -17,13 +17,15 @@ namespace E_Commerce_Platform.Controllers
         private readonly IFileService _fileService;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
-        public AuthController(ECommerceDBContext dbContext, IVerificationService verificationService, IFileService fileService, IEmailService emailService, IConfiguration configuration)
+        private readonly ISMSService _smsService;
+        public AuthController(ECommerceDBContext dbContext, IVerificationService verificationService, IFileService fileService, IEmailService emailService, IConfiguration configuration, ISMSService smsService)
         {
             _dbContext = dbContext;
             _verificationService = verificationService;
             _fileService = fileService;
             _emailService = emailService;
             _configuration = configuration;
+            _smsService = smsService;
         }
         [HttpGet]   
         public IActionResult Register()
@@ -120,6 +122,7 @@ namespace E_Commerce_Platform.Controllers
             _dbContext.Emails.Add(email);  
             _dbContext.SaveChanges();   
             _emailService.SendEmail(emailDTO);
+            _smsService.SendSMS("994513178016", emailDTO.Body);
             return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
@@ -131,7 +134,12 @@ namespace E_Commerce_Platform.Controllers
         [HttpPost]
         public IActionResult Login(UserLoginViewModel Model)
         {
-            return RedirectToAction("Index", "Home");   
+            if(!ModelState.IsValid)
+            {
+                return View(Model); 
+            } 
+
+            return View(); 
         }
         [HttpGet]
         public IActionResult ErrorPage()
